@@ -53,8 +53,7 @@ export function makeServer({ environment = "development" } = {}) {
     },
 
     routes() {
-      // this.namespace = "api";
-      this.urlPrefix = 'http://localhost:3000/'
+      this.namespace = "api";
       // auth routes (public)
       this.post("/auth/signup", signupHandler.bind(this));
       this.post("/auth/login", loginHandler.bind(this));
