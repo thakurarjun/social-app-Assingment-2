@@ -50,6 +50,19 @@ useEffect(() => {
   fetchBookmarkData()
 },[])
   
+const handleRemoveBookmark = (id) => {
+ var postId = id
+ axios.post(`api/users/remove-bookmark/${postId}`,{},
+ {headers:{authorization:encodedToken}})
+ .then((res) => {
+   toast.success("bookmark removed succesfully")
+   fetchPostData();
+ })
+ .catch((err) => {
+   console.log(err);
+ });
+}
+
   return (
     <Box w="100%" bg="gray.100">
       <Header />
@@ -94,7 +107,9 @@ useEffect(() => {
                  <Icon as={AiOutlineHeart} h={7} w={7} />
                  <Icon as={BiMessageAlt} h={7} w={7} />
                  <Icon as={BsShare} h={6} w={6} />
-                 <Icon as={BsFillBookmarkFill} h={6} w={6} />
+                 <Icon as={BsFillBookmarkFill} h={6} w={6}
+                  onClick={()=>handleRemoveBookmark(item._id)}
+                 />
                </Box>
                </>
               ))}

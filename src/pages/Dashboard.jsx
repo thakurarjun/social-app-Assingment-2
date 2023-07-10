@@ -143,18 +143,18 @@ const Dashboard = () => {
    });
   }
 
-const handleRemoveBookmark = (id) => {
- var postId = id
- axios.post(`api/users/remove-bookmark/${postId}`,{},
- {headers:{authorization:encodedToken}})
- .then((res) => {
-   toast.success("bookmark removed succesfully")
-   fetchPostData();
- })
- .catch((err) => {
-   console.log(err);
- });
-}
+// const handleRemoveBookmark = (id) => {
+//  var postId = id
+//  axios.post(`api/users/remove-bookmark/${postId}`,{},
+//  {headers:{authorization:encodedToken}})
+//  .then((res) => {
+//    toast.success("bookmark removed succesfully")
+//    fetchPostData();
+//  })
+//  .catch((err) => {
+//    console.log(err);
+//  });
+// }
 
   const fetchPostData = async () => {
     try {
@@ -297,9 +297,9 @@ const handleRemoveBookmark = (id) => {
                    <Box style={{ cursor: "pointer" }}>
                     
                    <Icon as={BsBookmarks} h={6} w={6} onClick={()=>handleAddBookmark(item._id)} />
-                   <Icon as={BsFillBookmarksFill} h={6} w={6} 
+                   {/* <Icon as={BsFillBookmarksFill} h={6} w={6} 
                    onClick={()=>handleRemoveBookmark(item._id)}
-                   />
+                   /> */}
                    </Box>
                   
                 </Box>
