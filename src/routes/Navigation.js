@@ -45,7 +45,7 @@ const Navigation = () => {
        <Route path="/mockman" element={<Mockman />} />
       </Route>
 
-        <Route path="/login" element={<Login />} />
+        <Route path="/auth/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/" element={<Home />} />
       
