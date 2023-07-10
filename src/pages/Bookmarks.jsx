@@ -35,7 +35,7 @@ console.log(state,"bokmarkdstate datats")
 const encodedToken  = getFromLocalStorage("token")
 
 const fetchBookmarkData = () => {
-  axios.get("http://localhost:3000/api/users/bookmark",
+  axios.get("api/users/bookmark",
   {headers:{authorization:encodedToken}})
   .then((res) => {
     console.log(res,"bookamrk resssponseeeee");

@@ -25,7 +25,7 @@ const Explore = () => {
 const [postData,setPostData] = useState([])
   const fetchPostData = async () => {
     try {
-      const response = await fetch("http://localhost:3000/api/posts");
+      const response = await fetch("api/posts");
       if (response.ok) {
         const responseData = await response.json();
         console.log(responseData,"post response dataaa")

@@ -70,7 +70,7 @@ const Dashboard = () => {
     };
 
     axios
-      .post("http://localhost:3000/api/posts", postData, {
+      .post("api/posts", postData, {
         headers: {
           authorization: encodedToken,
         },
@@ -87,7 +87,7 @@ const Dashboard = () => {
   const handleLikePost = async (id) => {
     var postId = id
 
-    axios.post(`http://localhost:3000/api/posts/like/${postId}`,{},
+    axios.post(`api/posts/like/${postId}`,{},
       {headers:{authorization:encodedToken}})
       .then((res) => {
         toast.success("post liked successfully")
@@ -100,7 +100,7 @@ const Dashboard = () => {
 
   const handleDislikePost = (id) => {
     var postId = id
-    axios.post(`http://localhost:3000/api/posts/dislike/${postId}`,{},
+    axios.post(`api/posts/dislike/${postId}`,{},
     {headers:{authorization:encodedToken}})
     .then((res) => {
       toast.success("post disliked successfully")
@@ -115,7 +115,7 @@ const Dashboard = () => {
   const handleDeletePost = async (id) => {
     var postId = id
      try{
-        const res = await fetch(`http://localhost:3000/api/posts/${postId}`
+        const res = await fetch(`api/posts/${postId}`
         ,{method:"DELETE",headers:{authorization: encodedToken,}})
         if(res.ok) {
           const resData = await res.json();
@@ -131,7 +131,7 @@ const Dashboard = () => {
  
   const handleAddBookmark = (id) => {
    var postId = id
-   axios.post(`http://localhost:3000/api/users/bookmark/${postId}`,{},
+   axios.post(`api/users/bookmark/${postId}`,{},
    {headers:{authorization:encodedToken}})
    .then((res) => {
     //  navigate("/bookmark",{state:{bookmarkData:res.data}})
@@ -145,7 +145,7 @@ const Dashboard = () => {
 
 const handleRemoveBookmark = (id) => {
  var postId = id
- axios.post(`http://localhost:3000/api/users/remove-bookmark/${postId}`,{},
+ axios.post(`api/users/remove-bookmark/${postId}`,{},
  {headers:{authorization:encodedToken}})
  .then((res) => {
    toast.success("bookmark removed succesfully")
@@ -158,7 +158,7 @@ const handleRemoveBookmark = (id) => {
 
   const fetchPostData = async () => {
     try {
-      const response = await fetch("http://localhost:3000/api/posts");
+      const response = await fetch("api/posts");
       if (response.ok) {
         const responseData = await response.json();
         const reverseData = await responseData.posts.reverse();
@@ -174,7 +174,7 @@ const handleRemoveBookmark = (id) => {
     try {
       var postId = post._id;
       const response = await axios.get(
-        `http://localhost:3000/api/posts/${postId}`
+        `api/posts/${postId}`
       );
       // setUserIdData(response);
       console.log(response, "===>resposnepostdata");
