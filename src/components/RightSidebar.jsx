@@ -23,7 +23,7 @@ const RightSidebar = () => {
 
   const fetchUserData = async () => {
     try {
-      const response = await fetch("http://localhost:3000/api/users");
+      const response = await fetch("api/users");
       if (response.ok) {
         const responseData = await response.json();
         setUserData(responseData.users);
@@ -47,7 +47,7 @@ const RightSidebar = () => {
     try {
       var userId = user._id;
       const response = await axios.get(
-        `http://localhost:3000/api/users/${userId}`
+        `api/users/${userId}`
       );
 
       navigate(`/user/:${userId}`, {
@@ -62,7 +62,7 @@ const RightSidebar = () => {
     var followUserId = id;
     axios
       .post(
-        `http://localhost:3000/api/users/follow/${followUserId}`,
+        `api/users/follow/${followUserId}`,
         {},
         { headers: { authorization: encodedToken } }
       )
@@ -83,7 +83,7 @@ const RightSidebar = () => {
 
     axios
       .post(
-        `http://localhost:3000/api/users/unfollow/${followUserId}`,
+        `api/users/unfollow/${followUserId}`,
         {},
         { headers: { authorization: encodedToken } }
       )
