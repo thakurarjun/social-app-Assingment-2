@@ -54,7 +54,7 @@ const [postData,setPostData] = useState([])
     // console.log(sortData,"sortdataaa")
     // setPostData(sortData)
     const sortData = [...postData].sort((a,b) => {
-      new Date(b.createdAt)  - new Date(a.createdAt)
+      (b.createdAt)  - (a.createdAt)
     })
     console.log(sortData,"sortdataaa")
      setPostData(sortData.reverse())
