@@ -26,6 +26,7 @@ import { useLocation } from "react-router-dom";
 import { useState } from "react";
 import moment from "moment";
 import { getFromLocalStorage } from "../helpers";
+import { toast } from "react-hot-toast";
 
 const Bookmarks = () => {
   const [bookmark,setBookmark] = useState({})
@@ -56,7 +57,7 @@ const handleRemoveBookmark = (id) => {
  {headers:{authorization:encodedToken}})
  .then((res) => {
    toast.success("bookmark removed succesfully")
-   fetchPostData();
+  
  })
  .catch((err) => {
    console.log(err);
