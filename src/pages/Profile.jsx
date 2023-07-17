@@ -24,11 +24,12 @@ import RightSidebar from "../components/RightSidebar";
 import { AiOutlineHeart, AiOutlineUser } from "react-icons/ai";
 import { BsFillBookmarksFill, BsShare, BsThreeDots } from "react-icons/bs";
 import { BiMessageAlt } from "react-icons/bi";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { signupSuccess } from "../redux/reducers/authSlice";
 
 const Images = ["https://bit.ly/dan-abramov"];
 
@@ -43,7 +44,8 @@ const schema = yup
   .required();
 
 const Profile = () => {
-  const [selectedAvatar, setSelectedAvatar] = useState("");
+  const dispatch = useDispatch();
+  const [previewURL, setPreviewURL] = useState(null);
   const {
     register,
     handleSubmit,
@@ -67,12 +69,37 @@ const Profile = () => {
       portfolio:data.portfolio
     }
     setEditProfile(apiData)
+    dispatch(signupSuccess(apiData))
   };
 
   console.log(editProfile,"====>editProfiledata")
-  const handleImages = (img) => {
-    setSelectedAvatar(img);
+  const handleFileUpload = (event) => {
+    const files = event.target.files;
+    const previewURLsArray = [];
+
+    // Check if files are selected
+    if (files && files.length > 0) {
+      
+      Array.from(files).forEach((file) => {
+        const reader = new FileReader();
+
+        // Read each file and add the preview URL to the array
+        reader.onloadend = () => {
+          previewURLsArray.push(reader.result);
+          if (previewURLsArray.length === files.length) {
+            const url = previewURLsArray[0];
+            setPreviewURL(url);
+          }
+        };
+
+        // Read the file as a data URL
+        reader.readAsDataURL(file);
+      });
+    }
   };
+
+  console.log(editProfile,"editProfile ===>")
+
   return (
     <Box w="100%" bg="gray.100">
       <Header />
@@ -91,18 +118,17 @@ const Profile = () => {
                   key={index}
                     borderRadius="full"
                     boxSize="100px"
-                    src={user?.img ?user?.img : selectedAvatar}
+                    src={previewURL?previewURL :  user?.img }
                     alt="Dan Abramov"
-                    onClick={() => handleImages(Image)}
                   />
                 ))}
 
                 <Box mt={2}>
-                  <Text fontSize={"2xl"} ml={5}>
-                    {user?.fullName}
+                  <Text fontSize={"2xl"} >
+                    {editProfile.fullname ? editProfile.fullname : user?.fullName}
                   </Text>
                   <Text fontSize={"md"} color="gray" ml={3}>
-                    {user?.username}
+                    {editProfile.username ? editProfile.username : user?.username}
                   </Text>
                   <Button mt={1} border={"1px solid gray"} onClick={onOpen}>
                     Edit Profile
@@ -121,9 +147,12 @@ const Profile = () => {
                         <FormControl>
                           <FormLabel>Add Profile</FormLabel>
                           <Input
+                          accept="image/*"
                             placeholder="fullname"
                             type="file"
                             {...register("profile")}
+                          onChange={ handleFileUpload}
+
                           />
                         </FormControl>
                         <FormControl>
@@ -168,8 +197,9 @@ const Profile = () => {
                   </Modal>
                 </Box>
                 <Box w="100%" mt={4}>
-                  <Text color="red"> Software Engineer </Text>
+                  <Text color="red">{editProfile.bio ? editProfile.bio :"Software Engineer"}  </Text>
                 </Box>
+                <Box>PortfolioURL: {editProfile.portfolio ?editProfile.portfolio : "https://github.com/" }</Box>
               </Box>
             </Box>
             <Box>

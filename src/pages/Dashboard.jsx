@@ -77,7 +77,7 @@ const Dashboard = () => {
       })
       .then((res) => {
         console.log(res);
-        toast.success("Item added successfully")
+        toast.success("Item added successfully");
         fetchPostData();
       })
       .catch((err) => {
@@ -85,76 +85,89 @@ const Dashboard = () => {
       });
   };
   const handleLikePost = async (id) => {
-    var postId = id
+    var postId = id;
 
-    axios.post(`api/posts/like/${postId}`,{},
-      {headers:{authorization:encodedToken}})
+    axios
+      .post(
+        `api/posts/like/${postId}`,
+        {},
+        { headers: { authorization: encodedToken } }
+      )
       .then((res) => {
-        toast.success("post liked successfully")
+        toast.success("post liked successfully");
         fetchPostData();
       })
       .catch((err) => {
         console.log(err);
       });
-  }
+  };
 
   const handleDislikePost = (id) => {
-    var postId = id
-    axios.post(`api/posts/dislike/${postId}`,{},
-    {headers:{authorization:encodedToken}})
-    .then((res) => {
-      toast.success("post disliked successfully")
-      fetchPostData();
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-
-  }
+    var postId = id;
+    axios
+      .post(
+        `api/posts/dislike/${postId}`,
+        {},
+        { headers: { authorization: encodedToken } }
+      )
+      .then((res) => {
+        toast.success("post disliked successfully");
+        fetchPostData();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const handleDeletePost = async (id) => {
-    var postId = id
-     try{
-        const res = await fetch(`api/posts/${postId}`
-        ,{method:"DELETE",headers:{authorization: encodedToken,}})
-        if(res.ok) {
-          const resData = await res.json();
-          toast.success("Item remove successfully")
-          fetchPostData();
-        } else {
-          console.log("Request failed with status:", res.status);
-        }
-     } catch (error) {
+    var postId = id;
+    try {
+      const res = await fetch(`api/posts/${postId}`, {
+        method: "DELETE",
+        headers: { authorization: encodedToken },
+      });
+      if (res.ok) {
+        const resData = await res.json();
+        toast.success("Item remove successfully");
+        fetchPostData();
+      } else {
+        console.log("Request failed with status:", res.status);
+      }
+    } catch (error) {
       console.log("Request failed:", error);
     }
-  }
- 
-  const handleAddBookmark = (id) => {
-   var postId = id
-   axios.post(`api/users/bookmark/${postId}`,{},
-   {headers:{authorization:encodedToken}})
-   .then((res) => {
-    //  navigate("/bookmark",{state:{bookmarkData:res.data}})
-     toast.success(" bookmark added succesfully")
-     fetchPostData();
-   })
-   .catch((err) => {
-     console.log(err);
-   });
-  }
+  };
 
-// const handleRemoveBookmark = (id) => {
-//  var postId = id
-//  axios.post(`api/users/remove-bookmark/${postId}`,{},
-//  {headers:{authorization:encodedToken}})
-//  .then((res) => {
-//    toast.success("bookmark removed succesfully")
-//    fetchPostData();
-//  })
-//  .catch((err) => {
-//    console.log(err);
-//  });
-// }
+  const handleAddBookmark = (id) => {
+    var postId = id;
+    axios
+      .post(
+        `api/users/bookmark/${postId}`,
+        {},
+        { headers: { authorization: encodedToken } }
+      )
+      .then((res) => {
+        //  navigate("/bookmark",{state:{bookmarkData:res.data}})
+        toast.success(" bookmark added succesfully");
+        fetchPostData();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  // const handleRemoveBookmark = (id) => {
+  //  var postId = id
+  //  axios.post(`api/users/remove-bookmark/${postId}`,{},
+  //  {headers:{authorization:encodedToken}})
+  //  .then((res) => {
+  //    toast.success("bookmark removed succesfully")
+  //    fetchPostData();
+  //  })
+  //  .catch((err) => {
+  //    console.log(err);
+  //  });
+  // }
 
   const fetchPostData = async () => {
     try {
@@ -173,9 +186,7 @@ const Dashboard = () => {
   const fetchPostIdData = async (post) => {
     try {
       var postId = post._id;
-      const response = await axios.get(
-        `api/posts/${postId}`
-      );
+      const response = await axios.get(`api/posts/${postId}`);
       // setUserIdData(response);
       console.log(response, "===>resposnepostdata");
       navigate(`/posts/:${postId}`, {
@@ -235,8 +246,8 @@ const Dashboard = () => {
               <Text fontSize={"xl"}>Latest Posts</Text>
               <Icon as={MdOutlinePostAdd} />
             </Box>
-            {postData.map((item,index) => (
-              <Box p={4} bg="white" mt={4} shadow={"lg"} key={index} >
+            {postData.map((item, index) => (
+              <Box p={4} bg="white" mt={4} shadow={"lg"} key={index}>
                 <Box onClick={() => fetchPostIdData(item)}>
                   <Box display={"flex"} justifyContent={"space-between"} mt={4}>
                     <Box display={"flex"} gap={4} mt={1}>
@@ -248,10 +259,7 @@ const Dashboard = () => {
                       </Text>
                     </Box>
                     <Box>
-                          <Icon
-                            as={BsThreeDots}
-                            style={{ cursor: "pointer" }}
-                          />
+                      <Icon as={BsThreeDots} style={{ cursor: "pointer" }} />
                     </Box>
                   </Box>
                   <Box w="77%" mx="auto">
@@ -260,9 +268,9 @@ const Dashboard = () => {
                     </Box>
                   </Box>
                 </Box>
-              <Heading as='h6' size='xs' mt={6}>
-                <Text ml={17}> {item?.likes?.likeCount} likes</Text>
-              </Heading>
+                <Heading as="h6" size="xs" mt={6}>
+                  <Text ml={17}> {item?.likes?.likeCount} likes</Text>
+                </Heading>
                 <Box
                   display={"flex"}
                   w="77%"
@@ -270,38 +278,44 @@ const Dashboard = () => {
                   mt={3}
                   justifyContent={"space-between"}
                 >
-                  <Box 
-                  style={{ cursor: "pointer" }}>
-                   {item?.likes?.likeCount === 0 ? 
-                   
-                    <Icon as={AiOutlineHeart} h={7} w={7}
-                      onClick={()=>handleLikePost(item?._id)} /> 
-
-                   : <Icon as={FcLike} h={7} w={7}
-                    onClick={()=>handleDislikePost(item?._id)} />} 
-
-                    </Box>
-                 <Box>
-                 <Icon as={BiMessageAlt} h={7} w={7}/>
-                 </Box>
-                  
-                  <Box onClick={() => handleDeletePost(item._id)}
-                    style={{ cursor: "pointer" }}>
-                  <Icon
-                    as={AiOutlineDelete}
-                    h={7}
-                    w={7}
-                    
-                  />
+                  <Box style={{ cursor: "pointer" }}>
+                    {item?.likes?.likeCount === 0 ? (
+                      <Icon
+                        as={AiOutlineHeart}
+                        h={7}
+                        w={7}
+                        onClick={() => handleLikePost(item?._id)}
+                      />
+                    ) : (
+                      <Icon
+                        as={FcLike}
+                        h={7}
+                        w={7}
+                        onClick={() => handleDislikePost(item?._id)}
+                      />
+                    )}
                   </Box>
-                   <Box style={{ cursor: "pointer" }}>
-                    
-                   <Icon as={BsBookmarks} h={6} w={6} onClick={()=>handleAddBookmark(item._id)} />
-                   {/* <Icon as={BsFillBookmarksFill} h={6} w={6} 
+                  <Box>
+                    <Icon as={BiMessageAlt} h={7} w={7} />
+                  </Box>
+
+                  <Box
+                    onClick={() => handleDeletePost(item._id)}
+                    style={{ cursor: "pointer" }}
+                  >
+                    <Icon as={AiOutlineDelete} h={7} w={7} />
+                  </Box>
+                  <Box style={{ cursor: "pointer" }}>
+                    <Icon
+                      as={BsBookmarks}
+                      h={6}
+                      w={6}
+                      onClick={() => handleAddBookmark(item._id)}
+                    />
+                    {/* <Icon as={BsFillBookmarksFill} h={6} w={6} 
                    onClick={()=>handleRemoveBookmark(item._id)}
                    /> */}
-                   </Box>
-                  
+                  </Box>
                 </Box>
               </Box>
             ))}
